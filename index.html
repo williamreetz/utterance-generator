@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Utterance Generator</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- jumbotron -->
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid text-center">
+        <h1 class="display-3">Utterance Generator</h1>
+        <p class="lead">Hilft bei der Generierung von Phrasen.</p>
+      </div>
+    </div>
+
+    <div class="container-fluid content">
+      <!-- input field -->
+      <div class="row">
+        <div class="col-sm">
+          <textarea class="form-control" id="text-input" rows="10" style="resize: none" placeholder="Bitte Phrasenrohlinge hier eingeben"></textarea>
+          <button type="button" class="btn btn-light btn-sm btn-block" id="copy-input">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+              <path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+            </svg>
+          </button>
+        </div>
+        <!-- output field -->
+        <div class="col-sm">
+          <textarea class="form-control" id="text-output" rows="10" style="resize: none" placeholder="Hier landen die generierten Phrasen"></textarea>
+          <button type="button" class="btn btn-light btn-sm btn-block" id="copy-output">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+              <path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="container">
+        <hr class="my-3" />
+
+        <!-- Generation Button -->
+        <div class="d-flex justify-content-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-danger btn-lg" id="btn-transform">Generieren</button>
+            <button type="button" class="btn btn-danger btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" id="btn-json" href="#">als JSON generieren</a>
+              <a class="dropdown-item" id="btn-text" href="#">als Text generieren</a>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-3" />
+
+        <!-- find Synonyms form -->
+        <div class="input-group mb-3">
+          <input type="text" class="form-control synonym-input" placeholder="Synonyme finden" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary search" type="submit">Suchen</button>
+          </div>
+        </div>
+
+        <div class="synonyms">
+          <!-- generated synonyms will be placed here -->
+        </div>
+
+        <hr class="my-3" />
+
+        <div class="alert alert-light text-center" role="alert" style="display: none">
+          <!-- alert text will be placed here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div class="footer-copyright text-center footer">
+      2020 |
+      <a href="https://williamreetz.github.io/"> William Reetz</a>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
